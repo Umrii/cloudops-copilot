@@ -1,4 +1,4 @@
-"""Ingestion pipeline: sources.yaml -> fetch -> clean -> chunk -> embed -> pgvector.
+"""Ingestion pipeline: urls.csv -> fetch -> clean -> chunk -> embed -> pgvector.
 
 Design notes
 ------------
@@ -20,7 +20,6 @@ from pathlib import Path
 from typing import Any
 
 import httpx
-import yaml
 from bs4 import BeautifulSoup
 
 from app.rag.embeddings import embed_documents
@@ -36,13 +35,8 @@ logger = logging.getLogger(__name__)
 # --- Paths ---
 DATA_DIR = Path(__file__).resolve().parents[3] / "data"
 RAW_DIR = DATA_DIR / "raw"
-CSV_SOURCES = DATA_DIR / "urls.csv"
-YAML_SOURCES = DATA_DIR / "sources.yaml"
-
-
-def default_sources_path() -> Path:
-    """Prefer the curated CSV if present, else fall back to the YAML template."""
-    return CSV_SOURCES if CSV_SOURCES.exists() else YAML_SOURCES
+# The corpus is defined by a single CSV: columns url, product, question.
+SOURCES_FILE = DATA_DIR / "urls.csv"
 
 # --- Chunking parameters (approximate; ~4 chars/token heuristic) ---
 CHARS_PER_TOKEN = 4
@@ -98,18 +92,17 @@ class Chunk:
 # Load sources
 # --------------------------------------------------------------------------- #
 def load_sources(path: Path | None = None) -> list[Source]:
-    """Load the corpus URL list from CSV (url,product[,question,title,...]) or YAML."""
-    path = path or default_sources_path()
+    """Load the corpus from the CSV source list (columns: url, product, question).
+
+    `title` and `document_type` columns are optional; `question` is ignored here
+    (it seeds the evaluation set, not ingestion).
+    """
+    path = path or SOURCES_FILE
     if not path.exists():
         raise FileNotFoundError(
-            f"{path} not found. Add your curated URL list (data/urls.csv or sources.yaml)."
+            f"{path} not found. Add your curated URL list to data/urls.csv "
+            "(columns: url, product, question)."
         )
-    if path.suffix.lower() == ".csv":
-        return _load_csv(path)
-    return _load_yaml(path)
-
-
-def _load_csv(path: Path) -> list[Source]:
     sources: list[Source] = []
     with path.open(encoding="utf-8-sig", newline="") as fh:
         for row in csv.DictReader(fh):
@@ -124,24 +117,6 @@ def _load_csv(path: Path) -> list[Source]:
                     document_type=(row.get("document_type") or "documentation").strip(),
                 )
             )
-    return sources
-
-
-def _load_yaml(path: Path) -> list[Source]:
-    raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    entries = raw.get("sources", raw if isinstance(raw, list) else [])
-    sources: list[Source] = []
-    for e in entries:
-        if not e or not e.get("url"):
-            continue
-        sources.append(
-            Source(
-                url=e["url"].strip(),
-                product=e.get("product", "unknown"),
-                title=e.get("title"),
-                document_type=e.get("document_type", "documentation"),
-            )
-        )
     return sources
 
 
@@ -367,7 +342,7 @@ def ingest_source(source: Source, *, use_cache: bool = True) -> int:
 def ingest_all(*, use_cache: bool = True, sources_path: Path | None = None) -> dict[str, Any]:
     sources = load_sources(sources_path)
     if not sources:
-        logger.warning("sources.yaml has no entries yet.")
+        logger.warning("data/urls.csv has no entries yet.")
         return {"sources": 0, "chunks": 0, **corpus_stats()}
 
     total_chunks = 0

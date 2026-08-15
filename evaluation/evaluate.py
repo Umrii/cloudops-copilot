@@ -7,11 +7,7 @@ Layer 2 (generation faithfulness, judged subset): run the full pipeline and use
 Gemini as a judge to classify each answer as grounded / partial / unsupported
 against the retrieved context.
 
-Run from the backend/ directory so `app` is importable:
-
-    python -m evaluation.evaluate      # (path: ../evaluation/evaluate.py)
-
-or from repo root:
+Run from the repo root (PYTHONPATH=backend makes `app` importable):
 
     PYTHONPATH=backend python evaluation/evaluate.py
 """

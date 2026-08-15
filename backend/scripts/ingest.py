@@ -3,9 +3,9 @@
     python -m scripts.ingest                    # fetch (cached) + embed + load
     python -m scripts.ingest --no-cache         # force re-download of every page
     python -m scripts.ingest --reset            # wipe corpus first (clean rebuild)
-    python -m scripts.ingest --sources PATH      # use a specific CSV/YAML source list
+    python -m scripts.ingest --sources PATH      # use an alternate CSV source list
 
-Source list is auto-detected: data/urls.csv (preferred) else data/sources.yaml.
+The corpus is defined by data/urls.csv (columns: url, product, question).
 Requires GEMINI_API_KEY in prod.env and a reachable database (DATABASE_URL).
 """
 from __future__ import annotations
@@ -38,7 +38,7 @@ def main() -> None:
         "--sources",
         type=Path,
         default=None,
-        help="Path to a CSV or YAML source list (defaults to data/urls.csv).",
+        help="Path to an alternate CSV source list (defaults to data/urls.csv).",
     )
     args = parser.parse_args()
 

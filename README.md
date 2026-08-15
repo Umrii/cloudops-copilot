@@ -69,14 +69,10 @@ the LLM only reasons over what was retrieved.
    ```
    The API is now on `http://localhost:8000` (`/health`, `/docs`).
 
-3. **Curate the corpus.** Add Google Cloud doc URLs to `data/sources.yaml`
-   (a starter list is included). Then ingest:
+3. **Build the corpus.** The document set is defined in `data/urls.csv`
+   (columns: `url, product, question`). Ingest it:
    ```bash
-   docker compose exec backend python -m scripts.ingest
-   ```
-   Or run ingestion on the host (with `DATABASE_URL` pointing at localhost):
-   ```bash
-   cd backend && pip install -r requirements.txt && python -m scripts.ingest
+   docker compose exec backend python -m scripts.ingest --reset
    ```
 
 4. **Ask a question:**
@@ -102,11 +98,11 @@ the LLM only reasons over what was retrieved.
 
 ### Corpus source list
 
-The corpus is driven by `data/urls.csv` (columns: `url, product, question`) — the
-`question` column doubles as candidate evaluation questions. A YAML alternative
-(`data/sources.yaml`) is also supported. Re-ingest cleanly with:
+The corpus is defined by a single file, `data/urls.csv` (columns:
+`url, product, question`); the `question` column also seeds the evaluation set.
+Edit that file to change the corpus, then re-ingest:
 ```bash
-python -m scripts.ingest --reset
+docker compose exec backend python -m scripts.ingest --reset
 ```
 
 ---
@@ -141,7 +137,8 @@ python -m scripts.ingest --reset
 A RAG pipeline fails in two independent places, so both are measured separately.
 
 ```bash
-cd backend && PYTHONPATH=. python -m evaluation.evaluate   # (evaluation/ is at repo root)
+# from the repo root:
+PYTHONPATH=backend python evaluation/evaluate.py
 ```
 
 - **Layer 1 — Retrieval (all questions):** `Recall@5` — did an expected source
@@ -181,7 +178,7 @@ have hidden a real generation bug.
 > large-scale benchmark. Questions are derived from the corpus (`data/urls.csv`),
 > so the gold source for each is known and Recall@5 is naturally favourable. Stated
 > honestly, that is the point: it demonstrates the retrieval and grounding pipeline
-> works. Reproduce with `python evaluation/evaluate.py`.
+> works. Reproduce with `PYTHONPATH=backend python evaluation/evaluate.py`.
 
 ---
 
@@ -204,7 +201,7 @@ cloudops-copilot/
 │   │   └── schemas/chat.py     # pydantic request/response
 │   ├── scripts/ingest.py       # CLI ingestion
 │   └── tests/                  # pytest (pure-logic + API smoke)
-├── data/sources.yaml           # ← your curated corpus URL list
+├── data/urls.csv               # ← the corpus: url, product, question
 ├── evaluation/                 # questions.json + evaluate.py
 ├── frontend/                   # Next.js UI
 ├── docker-compose.yml
