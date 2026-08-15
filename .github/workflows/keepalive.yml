@@ -1,0 +1,27 @@
+name: Keep API warm
+
+# Render's free web service spins down after ~15 min idle; the next request then
+# waits ~30-60s for a cold start. This pings /health every 10 min so a reviewer's
+# first question feels instant. Set repo variable API_URL to your Render API URL
+# (Settings > Secrets and variables > Actions > Variables): e.g.
+#   https://cloudops-copilot-api.onrender.com
+#
+# Note: GitHub disables scheduled workflows after 60 days of no repo activity, and
+# cron timing can drift by a few minutes. For a rock-solid keep-alive use
+# cron-job.org, or the $7/mo Render Starter plan to disable spin-down entirely.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping health endpoint
+        run: |
+          if [ -z "${{ vars.API_URL }}" ]; then
+            echo "API_URL variable not set — skipping."; exit 0
+          fi
+          curl -fsS --max-time 90 "${{ vars.API_URL }}/health" && echo " OK" || echo "ping failed (service may be waking)"

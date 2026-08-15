@@ -35,14 +35,19 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Frontend runs on a separate origin in dev; allow it to call the API.
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
+# The UI runs on a separate origin (Next.js dev locally, Vercel in prod), so it
+# calls this API cross-origin. Browsers enforce CORS, so the UI origin(s) must be
+# explicitly allowlisted — a missing entry makes the browser silently block every
+# request and the demo looks broken. Origins are configured via env, never "*".
+_cors_kwargs = dict(
+    allow_origins=settings.cors_origins_list,
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+if settings.cors_allow_origin_regex:
+    _cors_kwargs["allow_origin_regex"] = settings.cors_allow_origin_regex
+app.add_middleware(CORSMiddleware, **_cors_kwargs)
 
 app.include_router(router)
 

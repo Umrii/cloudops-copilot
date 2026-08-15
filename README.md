@@ -182,6 +182,22 @@ have hidden a real generation bug.
 
 ---
 
+## Deployment
+
+```text
+Browser ──▶ Vercel (Next.js UI) ──▶ Render (FastAPI API) ──▶ Render Postgres + pgvector ──▶ Gemini
+```
+
+- **Render** — FastAPI backend (Docker) + managed Postgres with `pgvector`,
+  provisioned as code via [`render.yaml`](render.yaml).
+- **Vercel** — the Next.js UI, with `NEXT_PUBLIC_API_URL` pointed at the Render API.
+- CORS is a strict env-driven allowlist (not `*`), and a keep-alive pings `/health`
+  to avoid free-tier cold starts.
+
+Full step-by-step in **[DEPLOYMENT.md](DEPLOYMENT.md)**.
+
+---
+
 ## Project structure
 
 ```text

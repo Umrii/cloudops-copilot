@@ -1,0 +1,40 @@
+# Render Blueprint — provisions the CloudOps Copilot backend + database.
+# In the Render dashboard: New > Blueprint, point it at this repo, and Render
+# reads this file. Two things are set by hand after (both marked sync: false):
+#   - GEMINI_API_KEY     : your Google AI Studio key (a secret)
+#   - CORS_ALLOW_ORIGINS : your Vercel UI origin, e.g. https://<app>.vercel.app
+#
+# Docs: https://render.com/docs/blueprint-spec
+
+databases:
+  - name: cloudops-db
+    databaseName: cloudops
+    user: cloudops
+    plan: free
+    postgresMajorVersion: "16"
+
+services:
+  - type: web
+    name: cloudops-copilot-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      # Internal connection string to the managed Postgres above.
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cloudops-db
+          property: connectionString
+      # Set in the dashboard (secret) — never committed.
+      - key: GEMINI_API_KEY
+        sync: false
+      # Set in the dashboard once you know your Vercel URL. Comma-separated.
+      # e.g. https://cloudops-copilot.vercel.app,https://www.anasatiq.com
+      - key: CORS_ALLOW_ORIGINS
+        sync: false
+      # Optional: also allow Vercel preview deployments (unique per-branch URLs).
+      - key: CORS_ALLOW_ORIGIN_REGEX
+        value: 'https://.*\.vercel\.app'

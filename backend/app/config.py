@@ -2,7 +2,7 @@
 
 All settings are read from environment variables (or prod.env in local dev).
 Only GEMINI_API_KEY is strictly required; everything else has a sensible default
-so the local and Cloud Run environments differ only by their env vars.
+so the local and deployed (Render) environments differ only by their env vars.
 """
 from __future__ import annotations
 
@@ -40,12 +40,25 @@ class Settings(BaseSettings):
     # --- Database ---
     database_url: str = "postgresql://cloudops:cloudops@localhost:5432/cloudops"
 
+    # --- CORS ---
+    # Comma-separated list of exact origins allowed to call the API from a browser.
+    # Local dev defaults to the Next.js dev server; in production set this to your
+    # deployed UI origin (e.g. https://cloudops-copilot.vercel.app).
+    cors_allow_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
+    # Optional regex to also allow Vercel preview deployments, e.g.
+    # https://.*\.vercel\.app  (leave empty to disable).
+    cors_allow_origin_regex: str = ""
+
     # --- App ---
     log_level: str = "INFO"
 
     @property
     def has_gemini(self) -> bool:
         return bool(self.gemini_api_key.strip())
+
+    @property
+    def cors_origins_list(self) -> list[str]:
+        return [o.strip() for o in self.cors_allow_origins.split(",") if o.strip()]
 
 
 @lru_cache
