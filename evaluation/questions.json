@@ -1,0 +1,122 @@
+[
+  {
+    "question": "What is Cloud Run and when should I use it?",
+    "product": "cloud_run",
+    "expected_sources": ["/run/docs/overview/what-is-cloud-run"]
+  },
+  {
+    "question": "What must a container do to start and serve on Cloud Run (listen on $PORT, respond within the request timeout)?",
+    "product": "cloud_run",
+    "expected_sources": ["/run/docs/container-contract"],
+    "expected_concepts": ["listen on the PORT environment variable", "respond to HTTP requests", "request timeout"],
+    "judge": true
+  },
+  {
+    "question": "How do I configure memory, CPU, concurrency, and request timeout for a Cloud Run service?",
+    "product": "cloud_run",
+    "expected_sources": ["/run/docs/configuring"],
+    "expected_concepts": ["memory limit", "CPU", "concurrency", "request timeout"],
+    "judge": true
+  },
+  {
+    "question": "How do I deploy a container image to Cloud Run?",
+    "product": "cloud_run",
+    "expected_sources": ["/run/docs/deploying"]
+  },
+  {
+    "question": "How do I deploy my first Cloud Run service?",
+    "product": "cloud_run",
+    "expected_sources": ["/run/docs/quickstarts"]
+  },
+  {
+    "question": "How do I run a REST API backend on Cloud Run that serves HTTP requests?",
+    "product": "cloud_run",
+    "expected_sources": ["/run/docs/triggering/https-request"]
+  },
+  {
+    "question": "How do I map a custom domain to a Cloud Run service?",
+    "product": "cloud_run",
+    "expected_sources": ["/run/docs/mapping-custom-domains"]
+  },
+  {
+    "question": "How do I add authentication to a Cloud Run app with Identity-Aware Proxy?",
+    "product": "cloud_run",
+    "expected_sources": ["/run/docs/securing/identity-aware-proxy-cloud-run"],
+    "expected_concepts": ["Identity-Aware Proxy", "IAP", "authenticated access"],
+    "judge": true
+  },
+  {
+    "question": "What IAM roles and permissions does Cloud Run use?",
+    "product": "cloud_run",
+    "expected_sources": ["/run/docs/reference/iam/roles"]
+  },
+  {
+    "question": "Why is my Cloud Run service returning 503 errors, getting out-of-memory killed, or failing liveness probes?",
+    "product": "cloud_run",
+    "expected_sources": ["/run/docs/troubleshooting"],
+    "expected_concepts": ["container failed to start", "listening on the port", "out of memory", "liveness probe"],
+    "judge": true
+  },
+  {
+    "question": "How do I debug a deployed Cloud Run service that returns 500 or 503 errors?",
+    "product": "cloud_run",
+    "expected_sources": ["/run/docs/tutorials/local-troubleshooting"],
+    "expected_concepts": ["logs", "Cloud Logging", "reproduce locally", "500 or 503"],
+    "judge": true
+  },
+  {
+    "question": "How do I connect a Cloud Run service to a Cloud SQL for PostgreSQL instance?",
+    "product": "cloud_sql",
+    "expected_sources": ["/sql/docs/postgres/connect-run"],
+    "expected_concepts": ["Cloud SQL connector", "connection", "instance connection name"],
+    "judge": true
+  },
+  {
+    "question": "How do I connect to Cloud SQL for PostgreSQL from Cloud Run, using public or private IP?",
+    "product": "cloud_sql",
+    "expected_sources": ["/sql/docs/postgres/connect-instance-cloud-run"]
+  },
+  {
+    "question": "How do I debug why my application cannot connect to a Cloud SQL for PostgreSQL instance?",
+    "product": "cloud_sql",
+    "expected_sources": ["/sql/docs/postgres/debugging-connectivity"],
+    "expected_concepts": ["public IP", "private IP", "authorized networks", "connectivity"],
+    "judge": true
+  },
+  {
+    "question": "What are common Cloud SQL for PostgreSQL problems (connectivity, instances, flags) and how do I fix them?",
+    "product": "cloud_sql",
+    "expected_sources": ["/sql/docs/postgres/troubleshooting"],
+    "expected_concepts": ["connection", "instance", "database flags"],
+    "judge": true
+  },
+  {
+    "question": "How does IAM work — what are principals, roles, resources, and allow policies?",
+    "product": "iam",
+    "expected_sources": ["/iam/docs/overview"]
+  },
+  {
+    "question": "What are IAM roles and permissions, and how do basic, predefined, and custom roles differ?",
+    "product": "iam",
+    "expected_sources": ["/iam/docs/roles-overview"]
+  },
+  {
+    "question": "What is a service account and how does an application authenticate as one?",
+    "product": "iam",
+    "expected_sources": ["/iam/docs/service-account-overview"]
+  },
+  {
+    "question": "How do I resolve an IAM permission-denied error?",
+    "product": "iam",
+    "expected_sources": ["/iam/docs/resolve-permission-errors"],
+    "expected_concepts": ["missing permission", "grant a role", "IAM policy"],
+    "judge": true
+  },
+  {
+    "question": "How do I use Policy Troubleshooter to find why a principal cannot access a resource?",
+    "product": "iam",
+    "expected_sources": ["/iam/docs/troubleshoot-policies"],
+    "expected_concepts": ["Policy Troubleshooter", "principal", "allow policy"],
+    "judge": true
+  }
+]

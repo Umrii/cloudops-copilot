@@ -1,0 +1,35 @@
+# --- Secrets / env ---
+prod.env
+.env
+*.env
+!.env.example
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Data (raw fetched + cleaned corpus can be large / re-generatable) ---
+data/raw/
+data/documents/
+
+# --- Node / Next.js ---
+node_modules/
+.next/
+out/
+frontend/.env*.local
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# --- Runtime ---
+*.log

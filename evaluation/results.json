@@ -1,0 +1,213 @@
+{
+  "retrieval": {
+    "n": 20,
+    "recall_at_5": 0.95,
+    "avg_latency_ms": 4.5,
+    "failure_rate": 0.0,
+    "failures": [],
+    "per_question": [
+      {
+        "question": "What is Cloud Run and when should I use it?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 31.98,
+        "top": "What is Cloud Run"
+      },
+      {
+        "question": "What must a container do to start and serve on Cloud Run (listen on $PORT, respond within the request timeout)?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 4.87,
+        "top": "Container runtime contract"
+      },
+      {
+        "question": "How do I configure memory, CPU, concurrency, and request timeout for a Cloud Run service?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 3.43,
+        "top": "Configure Cloud Run services"
+      },
+      {
+        "question": "How do I deploy a container image to Cloud Run?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 3.04,
+        "top": "Deploy container images to Cloud Run services"
+      },
+      {
+        "question": "How do I deploy my first Cloud Run service?",
+        "hit": false,
+        "chunks": 5,
+        "latency_ms": 3.36,
+        "top": "Deploy container images to Cloud Run services"
+      },
+      {
+        "question": "How do I run a REST API backend on Cloud Run that serves HTTP requests?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 4.51,
+        "top": "What is Cloud Run"
+      },
+      {
+        "question": "How do I map a custom domain to a Cloud Run service?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 3.89,
+        "top": "Mapping custom domains"
+      },
+      {
+        "question": "How do I add authentication to a Cloud Run app with Identity-Aware Proxy?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 4.45,
+        "top": "Configure IAP for Cloud Run"
+      },
+      {
+        "question": "What IAM roles and permissions does Cloud Run use?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 3.82,
+        "top": "Cloud Run IAM roles"
+      },
+      {
+        "question": "Why is my Cloud Run service returning 503 errors, getting out-of-memory killed, or failing liveness probes?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 2.52,
+        "top": "Troubleshoot Cloud Run issues"
+      },
+      {
+        "question": "How do I debug a deployed Cloud Run service that returns 500 or 503 errors?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 4.62,
+        "top": "Tutorial: Local troubleshooting of a Cloud Run service"
+      },
+      {
+        "question": "How do I connect a Cloud Run service to a Cloud SQL for PostgreSQL instance?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 3.75,
+        "top": "Quickstart: Connect to Cloud SQL for PostgreSQL from Cloud Run"
+      },
+      {
+        "question": "How do I connect to Cloud SQL for PostgreSQL from Cloud Run, using public or private IP?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 2.57,
+        "top": "Connect from Cloud Run"
+      },
+      {
+        "question": "How do I debug why my application cannot connect to a Cloud SQL for PostgreSQL instance?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 2.43,
+        "top": "Debug connection issues"
+      },
+      {
+        "question": "What are common Cloud SQL for PostgreSQL problems (connectivity, instances, flags) and how do I fix them?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 2.33,
+        "top": "Troubleshoot"
+      },
+      {
+        "question": "How does IAM work \u2014 what are principals, roles, resources, and allow policies?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 1.76,
+        "top": "IAM overview"
+      },
+      {
+        "question": "What are IAM roles and permissions, and how do basic, predefined, and custom roles differ?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 1.8,
+        "top": "IAM overview"
+      },
+      {
+        "question": "What is a service account and how does an application authenticate as one?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 1.71,
+        "top": "Service accounts overview"
+      },
+      {
+        "question": "How do I resolve an IAM permission-denied error?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 2.24,
+        "top": "Resolve permission errors"
+      },
+      {
+        "question": "How do I use Policy Troubleshooter to find why a principal cannot access a resource?",
+        "hit": true,
+        "chunks": 5,
+        "latency_ms": 1.83,
+        "top": "Troubleshoot policies"
+      }
+    ]
+  },
+  "faithfulness": {
+    "n": 10,
+    "grounded_rate": 0.9,
+    "counts": {
+      "grounded": 9,
+      "partial": 1,
+      "unsupported": 0,
+      "unparseable": 0
+    },
+    "per_question": [
+      {
+        "question": "What must a container do to start and serve on Cloud Run (listen on $PORT, respond within the request timeout)?",
+        "verdict": "grounded",
+        "reason": "Every substantive claim in the answer is directly supported by the provided context. The answer accurately details the requirements for a container to start and serve on Cloud Run, including listening on the correct port, responding within the timeout, and other relevant specifications, with appropriate references to the context sections."
+      },
+      {
+        "question": "How do I configure memory, CPU, concurrency, and request timeout for a Cloud Run service?",
+        "verdict": "grounded",
+        "reason": "Every substantive claim in the answer regarding configuring memory, CPU, concurrency, and request timeout is directly supported by the provided context. The context explicitly mentions controlling memory and CPU, their default values and configurability, configuring maximum concurrent requests per instance up to 1000, and setting a request timeout."
+      },
+      {
+        "question": "How do I add authentication to a Cloud Run app with Identity-Aware Proxy?",
+        "verdict": "partial",
+        "reason": "The answer provides a `gcloud run deploy` command for a new service with `--iap` and `--allow-unauthenticated` flags. The provided context does not contain this specific command for deploying a *new* service with IAP. The context's `gcloud` section focuses on updating an *existing* service with `--iap` and explicitly recommends using the Cloud Console for initial IAP setup, especially in projects without an organization. The `--allow-unauthenticated` flag is also not mentioned in conjunction with IAP in the context, and would contradict the purpose of IAP."
+      },
+      {
+        "question": "Why is my Cloud Run service returning 503 errors, getting out-of-memory killed, or failing liveness probes?",
+        "verdict": "grounded",
+        "reason": "Every substantive claim and troubleshooting step in the answer is directly supported by the provided context. The answer accurately describes the causes and resolutions for 503 errors, out-of-memory issues, and liveness probe failures in Cloud Run, drawing specific details and recommendations from the context."
+      },
+      {
+        "question": "How do I debug a deployed Cloud Run service that returns 500 or 503 errors?",
+        "verdict": "grounded",
+        "reason": "Every substantive claim in the answer is directly supported by the provided context. The answer accurately describes debugging steps for 500/503 errors, including checking for 403 errors, collecting details, and investigating specific causes like VPC bottlenecks, TCP socket exhaustion, instance limits, malformed responses, liveness probe failures, and memory issues, all of which are detailed in the context."
+      },
+      {
+        "question": "How do I connect a Cloud Run service to a Cloud SQL for PostgreSQL instance?",
+        "verdict": "grounded",
+        "reason": "Every substantive claim and instruction in the answer is directly supported by the provided context, including the steps for connecting via the Google Cloud Console and the `gcloud` command-line tool. The references are accurate."
+      },
+      {
+        "question": "How do I debug why my application cannot connect to a Cloud SQL for PostgreSQL instance?",
+        "verdict": "grounded",
+        "reason": "Every substantive claim in the answer is directly supported by the provided context. The answer accurately synthesizes information from different sections of the context to provide a comprehensive debugging guide, covering connecting, authorizing, and authenticating issues, along with general troubleshooting steps."
+      },
+      {
+        "question": "What are common Cloud SQL for PostgreSQL problems (connectivity, instances, flags) and how do I fix them?",
+        "verdict": "grounded",
+        "reason": "Every substantive claim in the answer, including the problems identified and their corresponding solutions, is directly supported by the provided context. The answer correctly categorizes the issues into connectivity and instance management, and accurately extracts details for each problem and its fix. It also correctly integrates the mention of the `cloudsql.iam_authentication` flag into the authentication section under connectivity, as there isn't a separate 'flags' problem category in the context."
+      },
+      {
+        "question": "How do I resolve an IAM permission-denied error?",
+        "verdict": "grounded",
+        "reason": "Every substantive claim in the answer is directly supported by the provided context. The answer accurately summarizes the methods for resolving IAM permission-denied errors, categorizing them by policy type (deny, allow) and general troubleshooting steps, with correct citations to the relevant context sections."
+      },
+      {
+        "question": "How do I use Policy Troubleshooter to find why a principal cannot access a resource?",
+        "verdict": "grounded",
+        "reason": "Every substantive claim in the answer is directly supported by the provided context. The answer correctly identifies the steps mentioned in the context for using Policy Troubleshooter, including determining policies, interpreting results (and noting where to find more info), and accessing it via error messages. It also correctly states what types of policies Policy Troubleshooter can troubleshoot."
+      }
+    ]
+  }
+}

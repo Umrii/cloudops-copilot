@@ -1,0 +1,60 @@
+# CloudOps Copilot — document corpus.
+#
+# Add the Google Cloud documentation pages you want ingested here.
+# Google Cloud docs are licensed CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+# — reuse is permitted with attribution, which the citations in this app provide.
+#
+# Each entry:
+#   url:            (required) the documentation page URL
+#   product:        (required) short slug used for metadata filtering, e.g. cloud_run
+#   title:          (optional) overrides the page's own <title> if you want
+#   document_type:  (optional) defaults to "documentation"
+#
+# Aim for ~50–100 focused troubleshooting / concept pages across the products
+# below. Quality beats quantity. A handful of starter examples are included —
+# replace/extend with your curated list.
+
+sources:
+  # --- Cloud Run ---
+  - url: https://cloud.google.com/run/docs/troubleshooting
+    product: cloud_run
+  - url: https://cloud.google.com/run/docs/container-contract
+    product: cloud_run
+  - url: https://cloud.google.com/run/docs/resource-model
+    product: cloud_run
+
+  # --- Cloud Storage ---
+  - url: https://cloud.google.com/storage/docs/troubleshooting
+    product: cloud_storage
+
+  # --- Compute Engine ---
+  - url: https://cloud.google.com/compute/docs/troubleshooting/troubleshooting-instances
+    product: compute_engine
+
+  # --- Cloud SQL ---
+  - url: https://cloud.google.com/sql/docs/postgres/diagnose-issues
+    product: cloud_sql
+
+  # --- BigQuery ---
+  - url: https://cloud.google.com/bigquery/docs/error-messages
+    product: bigquery
+
+  # --- IAM ---
+  - url: https://cloud.google.com/iam/docs/troubleshooting-access
+    product: iam
+
+  # --- VPC ---
+  - url: https://cloud.google.com/vpc/docs/troubleshooting
+    product: vpc
+
+  # --- Cloud Logging ---
+  - url: https://cloud.google.com/logging/docs/troubleshooting
+    product: cloud_logging
+
+  # --- Cloud Monitoring ---
+  - url: https://cloud.google.com/monitoring/support/troubleshooting
+    product: cloud_monitoring
+
+  # --- Vertex AI ---
+  - url: https://cloud.google.com/vertex-ai/docs/general/troubleshooting
+    product: vertex_ai
