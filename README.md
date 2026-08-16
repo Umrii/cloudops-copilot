@@ -17,11 +17,10 @@ of hallucinating.
 
 ## Live demo
 
-[![Live demo](https://img.shields.io/badge/demo-live-brightgreen?style=flat-square)](https://cloudops-copilot.vercel.app)&nbsp;[![API docs](https://img.shields.io/badge/API-docs-blue?style=flat-square)](https://cloudops-copilot-api.onrender.com/docs)
+[![Live demo](https://img.shields.io/badge/demo-live-brightgreen?style=flat-square)](https://cloudops-copilot.vercel.app)
 
 **Try it → [cloudops-copilot.vercel.app](https://cloudops-copilot.vercel.app)** — ask a Google
-Cloud troubleshooting question and get a grounded, cited answer. Interactive API
-docs: **[/docs](https://cloudops-copilot-api.onrender.com/docs)**.
+Cloud troubleshooting question and get a grounded, cited answer.
 
 ![CloudOps Copilot answering a Cloud Run 503 question with grounded, cited sources](docs/screenshot.png)
 
