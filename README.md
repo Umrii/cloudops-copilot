@@ -17,7 +17,7 @@ of hallucinating.
 
 ## Live demo
 
-[![Live demo](https://img.shields.io/badge/demo-live-brightgreen?style=flat-square)](https://cloudops-copilot.vercel.app)&nbsp
+[![Live demo](https://img.shields.io/badge/demo-live-brightgreen?style=flat-square)](https://cloudops-copilot.vercel.app)&nbsp;[![API docs](https://img.shields.io/badge/API-docs-blue?style=flat-square)](https://cloudops-copilot-api.onrender.com/docs)
 
 **Try it → [cloudops-copilot.vercel.app](https://cloudops-copilot.vercel.app)** — ask a Google
 Cloud troubleshooting question and get a grounded, cited answer. Interactive API
