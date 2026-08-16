@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { memo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
@@ -26,6 +26,50 @@ const EXAMPLES = [
   "How do I resolve an IAM permission-denied error?",
 ];
 
+// Memoized so the (relatively expensive) Markdown parse + sources render only
+// happens when the answer actually changes — not on every keystroke in the
+// textarea above it. This is what keeps the input responsive (good INP).
+const AnswerCard = memo(function AnswerCard({ result }: { result: ChatResponse }) {
+  const noEvidence = !result.grounded || result.sources.length === 0;
+  return (
+    <section className="answer card">
+      <span className={`badge ${noEvidence ? "insufficient" : "grounded"}`}>
+        {noEvidence ? "⚠ Insufficient evidence" : "✓ Grounded"}
+        {!noEvidence &&
+          ` · ${result.retrieval.chunks_used} sources · ${result.retrieval.latency_ms} ms retrieval`}
+      </span>
+
+      <div className="answer-body">
+        <ReactMarkdown>{result.answer}</ReactMarkdown>
+      </div>
+
+      {result.sources.length > 0 && (
+        <div className="sources">
+          <h3>Sources</h3>
+          {result.sources.map((s) => (
+            <a
+              key={s.url}
+              className="source"
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>
+                <div className="source-title">{s.title}</div>
+                <div className="source-meta">
+                  {s.product ? `${s.product} · ` : ""}
+                  {s.section || s.url.replace(/^https?:\/\//, "")}
+                </div>
+              </span>
+              <span className="relevance">{Math.round(s.relevance * 100)}%</span>
+            </a>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+});
+
 export default function Home() {
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,6 +82,9 @@ export default function Home() {
     setLoading(true);
     setError(null);
     setResult(null);
+    // Yield a frame so the "Thinking…" state paints immediately on click,
+    // before the request work begins — keeps the button feeling instant.
+    await new Promise((r) => requestAnimationFrame(() => r(null)));
     try {
       const res = await fetch(`${API_URL}/api/chat`, {
         method: "POST",
@@ -60,8 +107,6 @@ export default function Home() {
     e.preventDefault();
     ask(question);
   }
-
-  const noEvidence = result && (!result.grounded || result.sources.length === 0);
 
   return (
     <main className="page">
@@ -114,45 +159,7 @@ export default function Home() {
 
       {error && <div className="error">⚠ {error}</div>}
 
-      {result && (
-        <section className="answer card">
-          <span className={`badge ${noEvidence ? "insufficient" : "grounded"}`}>
-            {noEvidence ? "⚠ Insufficient evidence" : "✓ Grounded"}
-            {!noEvidence &&
-              ` · ${result.retrieval.chunks_used} sources · ${result.retrieval.latency_ms} ms retrieval`}
-          </span>
-
-          <div className="answer-body">
-            <ReactMarkdown>{result.answer}</ReactMarkdown>
-          </div>
-
-          {result.sources.length > 0 && (
-            <div className="sources">
-              <h3>Sources</h3>
-              {result.sources.map((s) => (
-                <a
-                  key={s.url}
-                  className="source"
-                  href={s.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span>
-                    <div className="source-title">{s.title}</div>
-                    <div className="source-meta">
-                      {s.product ? `${s.product} · ` : ""}
-                      {s.section || s.url.replace(/^https?:\/\//, "")}
-                    </div>
-                  </span>
-                  <span className="relevance">
-                    {Math.round(s.relevance * 100)}%
-                  </span>
-                </a>
-              ))}
-            </div>
-          )}
-        </section>
-      )}
+      {result && <AnswerCard result={result} />}
 
       <footer className="footer">
         RAG · PostgreSQL + pgvector · Gemini ·{" "}

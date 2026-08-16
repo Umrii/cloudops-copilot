@@ -15,6 +15,22 @@ of hallucinating.
 
 ---
 
+## Live demo
+
+[![Live demo](https://img.shields.io/badge/demo-live-brightgreen?style=flat-square)](https://cloudops-copilot.vercel.app)&nbsp;[![API docs](https://img.shields.io/badge/API-docs-blue?style=flat-square)](https://cloudops-copilot-api.onrender.com/docs)
+
+**Try it → [cloudops-copilot.vercel.app](https://cloudops-copilot.vercel.app)** — ask a Google
+Cloud troubleshooting question and get a grounded, cited answer. Interactive API
+docs: **[/docs](https://cloudops-copilot-api.onrender.com/docs)**.
+
+![CloudOps Copilot answering a Cloud Run 503 question with grounded, cited sources](docs/screenshot.png)
+
+> Deployed on **Render** (FastAPI + managed Postgres/pgvector) and **Vercel**
+> (Next.js UI). A 10-minute keep-alive ping holds the free-tier API warm, so the
+> first request is instant. Full write-up in [DEPLOYMENT.md](DEPLOYMENT.md).
+
+---
+
 ## Architecture
 
 ```text
