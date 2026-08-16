@@ -119,6 +119,14 @@ export default function Home() {
           Troubleshoot Google Cloud with answers grounded in the official
           documentation — every claim cited.
         </p>
+        <div className="eval-stats" aria-label="Evaluation results">
+          <span className="stat"><strong>95%</strong> Recall@5</span>
+          <span className="stat"><strong>90%</strong> grounded</span>
+          <span className="stat"><strong>0%</strong> unsupported</span>
+        </div>
+        <p className="eval-note">
+          Curated evaluation set · 20 retrieval questions, 10 judged for faithfulness
+        </p>
       </header>
 
       <div className="card">

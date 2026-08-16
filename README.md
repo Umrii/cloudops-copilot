@@ -63,7 +63,7 @@ the LLM only reasons over what was retrieved.
 | Generation | Gemini `gemini-2.5-flash` |
 | Frontend | Next.js + TypeScript |
 | Containers | Docker + docker-compose |
-| Target cloud | Cloud Run + Cloud SQL |
+| Deployment | Render (FastAPI + Postgres/pgvector) · Vercel (Next.js) |
 | Tests | pytest |
 
 ---
